@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/home.dart';
+import 'package:job_finder/screens/home/widgets/notificationpage.dart';
 
 class SucessPage extends StatefulWidget {
 
@@ -27,7 +28,7 @@ class _SucessPageState extends State<SucessPage> {
           SizedBox(height: 32),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> JobsGrid()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> NotificationPage(buttonValue: "Applied For the Job!")));
             },
             child: Text('Back to Jobs List'),
           )

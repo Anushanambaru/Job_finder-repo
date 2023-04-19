@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/widgets/apply.dart';
 import 'package:job_finder/screens/home/widgets/formPage.dart';
+import '../../service/auth_service.dart';
 import 'welcome.dart';
 import 'package:job_finder/screens/home/widgets/contact.dart';
 import 'package:job_finder/screens/home/widgets/notificationpage.dart';
@@ -18,6 +19,8 @@ class JobsGrid extends StatefulWidget {
 class _JobsGridState extends State<JobsGrid> {
   List jobsgridlistData = [];
   bool isLoading = false;
+  AuthService authService = AuthService();
+
   @override
   void initState() {
     super.initState();
@@ -36,7 +39,7 @@ class _JobsGridState extends State<JobsGrid> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Dashboard()),
+                  MaterialPageRoute(builder: (context) => NotificationPage(buttonValue: '',)),
                 );
                 //action coe when button is pressed
               },
@@ -70,7 +73,7 @@ class _JobsGridState extends State<JobsGrid> {
                     MaterialPageRoute(
                         builder: (context) => ProfilePage(
                             profileImageUrl:
-                                'https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-blue-working-woman-illustration-womanbusinessoffice-png-image_591421.jpg' )),
+                                'https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-blue-working-woman-illustration-womanbusinessoffice-png-image_591421.jpg',  )),
                   );
                 },
               ),
@@ -84,15 +87,34 @@ class _JobsGridState extends State<JobsGrid> {
                   );
                 },
               ),
+
               ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text(' Logout '),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => WelcomePage()),
+                onTap: () async {
+                  showDialog( barrierDismissible: false,
+                      context: context, builder: (context) {
+                        return AlertDialog( title: const Text("Logout"),
+                          content: const Text("Are you sure you want to logout?"),
+                          actions: [
+                            IconButton
+                              ( onPressed: () {
+                              Navigator.pop(context);
+                            },
+                              icon: const Icon( Icons.cancel, color: Colors.red, ), ),
+                            IconButton(
+                              onPressed: () async {
+                                await authService.signOut(context: context);
+                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const WelcomePage()), (route) => false); }, icon: const Icon( Icons.done, color: Colors.green, ),
+                            ),
+                          ],
+                        );
+                      }
                   );
                 },
+                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text(
+                  "Logout", style: TextStyle(color: Colors.black),
+                ),
               ),
             ],
           ),
@@ -121,14 +143,14 @@ class _JobsGridState extends State<JobsGrid> {
                       )
                         ],
                   ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     StreamBuilder(
                             stream: firebaseSetup(),
                             builder: (context, snapshotData) {
 
                               print("status : ${snapshotData.connectionState}");
                              if(snapshotData.connectionState == ConnectionState.waiting){
-                               return Center(
+                               return const Center(
                                  child: CircularProgressIndicator(),
                                );
                              } else if(snapshotData.hasError){
@@ -138,7 +160,7 @@ class _JobsGridState extends State<JobsGrid> {
                                  width: MediaQuery.of(context).size.width*0.85,
                                  child: GridView.builder(
                                    shrinkWrap: true,
-                                   physics: NeverScrollableScrollPhysics(),
+                                   physics: const NeverScrollableScrollPhysics(),
                                    itemCount: snapshotData.data.length,
                                    itemBuilder: (context, index) {
                                      final JobData = snapshotData.data[index];
@@ -152,6 +174,7 @@ class _JobsGridState extends State<JobsGrid> {
                                      final vacancy = JobData['no_of_vacancies'];
                                      final  requirement = JobData['Requirements'];
                                      final  date = JobData['Posted date'];
+                                     final location = JobData['Location'];
                                      return      Container(
                                        decoration: BoxDecoration(
                                            borderRadius: BorderRadius.circular(20.0)),
@@ -167,7 +190,7 @@ class _JobsGridState extends State<JobsGrid> {
                                              ],
                                            ),
                                            onTap: () {
-                                             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ApplyPage(photo: photo, text: text, role: role, job: job, vacancy: vacancy, email: email, phone: phone, requirement: requirement, date: date,) ));
+                                             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ApplyPage(photo: photo, text: text, role: role, job: job, vacancy: vacancy, email: email, phone: phone, requirement: requirement, date: date,location: location,) ));
                                            },
                                          ),
                                        ),
@@ -183,7 +206,7 @@ class _JobsGridState extends State<JobsGrid> {
                                  ),
                                );
                              } else {
-                               return CircularProgressIndicator();
+                               return const CircularProgressIndicator();
                              }
 
 

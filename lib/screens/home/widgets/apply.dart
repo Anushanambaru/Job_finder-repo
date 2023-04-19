@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/widgets/formPage.dart';
+import 'package:job_finder/screens/home/widgets/notificationpage.dart';
 
 class ApplyPage extends StatefulWidget {
   final String photo;
@@ -11,6 +12,8 @@ class ApplyPage extends StatefulWidget {
   final String phone;
   final String requirement;
   final String date;
+  final String location;
+
 
 
 
@@ -24,8 +27,11 @@ class ApplyPage extends StatefulWidget {
     required this.phone,
     required this.requirement,
     required this.date,
+    required this.location,
+
 
   });
+
 
   @override
   State<ApplyPage> createState() => _ApplyPageState();
@@ -65,6 +71,13 @@ class _ApplyPageState extends State<ApplyPage> {
                         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Text(
+                            'Location : ${widget.location}',
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Text(
@@ -116,8 +129,13 @@ class _ApplyPageState extends State<ApplyPage> {
         isExtended: true,
         backgroundColor: Colors.blue,
         onPressed: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> MyFormPage()));
-          },
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyFormPage(),
+            ),
+          );
+        },
         label:const Text('Apply'),
       ),
     );

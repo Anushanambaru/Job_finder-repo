@@ -25,7 +25,7 @@ class _ContactInfoPageState extends State<ContactInfoPage> {
                 fontSize: 18.0, color: Colors.blueGrey,
               ),
             ),
-            const Text('JOB FINDER', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20, color: Colors.blueAccent),),
+            const Text('JOB FINDER', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black),),
             SizedBox(height: 25.0),
             const Text(
               'Email',
@@ -43,7 +43,7 @@ class _ContactInfoPageState extends State<ContactInfoPage> {
                 fontSize: 18.0, color: Colors.blueGrey,
               ),
             ),
-            const Text('0401234567', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20, color: Colors.black)),
+            const Text('0401234567', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
             SizedBox(height: 25.0),
 
                 const Text(

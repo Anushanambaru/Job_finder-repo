@@ -1,23 +1,23 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:job_finder/screens/home/home.dart';
 
 class ProfilePage extends StatefulWidget {
-  //final String? name;
- // final String? emails;
+ // final String? name;
+ //  final String? emails;
   final String profileImageUrl;
-  //final String qualification;
-  //final String Phone;
+ //  final String qualification;
+ //  final String phone;
+ // final String role;
 
 ProfilePage({
-  //    this.name,
-  //  this.emails,
-  //  this.qualification,
-  // this.Phone,
+  //  required this.name,
+  // required this.emails,
+  // required this.qualification,
+  // required this.phone,
   required this.profileImageUrl,
+  // required this.role,
   });
 
   @override
@@ -25,20 +25,28 @@ ProfilePage({
 }
 
 class _ProfilePageState extends State<ProfilePage> {
- final databaseRef = FirebaseDatabase.instance.ref();
- TextEditingController names = TextEditingController();
- TextEditingController email = TextEditingController();
- TextEditingController qualification = TextEditingController();
- TextEditingController Phone_Number = TextEditingController();
+  // final TextEditingController _controllerName=TextEditingController();
+  // final TextEditingController  _controllerQualification =TextEditingController();
+  // final TextEditingController _controllerRole =TextEditingController();
+  // final TextEditingController _controllerPhone=TextEditingController();
+  // final TextEditingController _controllerEmail=TextEditingController();
 
 
-   @override
+
+
+ // GlobalKey<FormState> key=GlobalKey();
+
+ //CollectionReference _reference= FirebaseFirestore.instance.collection('Profile');
+
+ String? useremail;
+ String? name;
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getEmail();
 
-   }
+  }
 
 
   @override
@@ -46,13 +54,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.cyan[50],
           appBar: AppBar(
-            title: Text('User Profile'),
+            title: const Text('User Profile'),
             leading: IconButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => JobsGrid()),
+                  MaterialPageRoute(builder: (context) => const JobsGrid()),
                 );
                 //action coe when button is pressed
               },
@@ -68,6 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 15,),
             CircleAvatar(
               backgroundImage: NetworkImage(widget.profileImageUrl),
               radius: 50,
@@ -80,74 +90,65 @@ class _ProfilePageState extends State<ProfilePage> {
             //   widget.Phone,
             //   style: TextStyle(fontSize: 16),
             // ),
-      SizedBox (height: 10),
+      const SizedBox (height: 10),
       Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget> [
-        TextField(
-           controller: names,
-          decoration: InputDecoration(labelText: 'Name',
-              prefixIcon: Icon(Icons.person),
-              border: myInputBorder(),
-            enabledBorder: myInputBorder(),
-            focusedBorder: myFocusBorder()
+      crossAxisAlignment: CrossAxisAlignment.center,
 
-          ),
-        ),
-        SizedBox(height: 10),
+          children: <Widget> [
+            const Text(
+              'Name',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 18.0, color: Colors.black54,
+              ),
+            ),
+             const Text(
+                'Anusha Nambaru',  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+            const SizedBox(height: 25.0),
+            const Text(
+              'Email',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 18.0, color: Colors.black54,
+              ),
+            ),
+            const Text('anushan@gmail.com', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+            const SizedBox(height: 25.0),
+            const Text(
+              'Phone',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 18.0, color: Colors.black54,
+              ),
+            ),
+            const Text('9090909090', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+            const SizedBox(height: 25.0),
 
-        TextField(
-          controller: email,
-          decoration: InputDecoration(labelText: 'Email Id',
-            prefixIcon: Icon(Icons.email_sharp),
-            border: myInputBorder(),
-            enabledBorder: myInputBorder(),
-            focusedBorder: myFocusBorder(),
-          ),
-        ),
-        SizedBox(height: 10),
+            const Text(
+              'Designation',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 18.0, color: Colors.black54,
+              ),
+            ),
+            const Text('Flutter developer', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
 
-        TextField(
-          controller: qualification,
-          decoration: InputDecoration(labelText: 'Qualification',
-            prefixIcon: Icon(Icons.school_sharp),
-            border: myInputBorder(),
-            enabledBorder: myInputBorder(),
-            focusedBorder: myFocusBorder(),
-          ),
-        ),
-        const SizedBox(height: 10),
+            const SizedBox(height: 50.0),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => const JobsGrid()));
+              },
+              child: const Text('Back'),
 
-        TextField(
-          controller: Phone_Number,
-          decoration: InputDecoration(labelText: 'Phone Number',
-            prefixIcon: Icon(Icons.phone_android_sharp),
-            border: myInputBorder(),
-            enabledBorder: myInputBorder(),
-            focusedBorder: myFocusBorder(),
-          ),
-        ),
-        const SizedBox(height: 12.0),
-
-        TextButton(
-          onPressed: () async {
-            final commentsUpdateData = createCommentsRecordData(
-             comment1: _ProfilePageState.textController.text,
-            );
-            await buttonCommentsRecord.reference.update(commentsUpdateData);
-            context.pop();
-            },
-
-          child: const Text('Update', style:
-          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-        ),
+            ),
           ],
-        ),
-      ],
-    ),
-      )
-      ),
+
+    )
+          ]
+          )
+    )
+    )
         ),
     );
   }
@@ -155,28 +156,9 @@ class _ProfilePageState extends State<ProfilePage> {
   getEmail()async{
     var myemail = await  FirebaseAuth.instance.currentUser!.email;
 
-    email.text = myemail!;
-
     print('Test : $myemail');
   }
 
-  OutlineInputBorder myInputBorder(){
-    return const OutlineInputBorder(
-        borderRadius:BorderRadius.all(Radius.circular(15)),
-    borderSide: BorderSide(
-      color: Colors.blueGrey,
-      width: 3,
-    ),
-    );
-  }
-
-  OutlineInputBorder myFocusBorder() {
-    return const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        borderSide: BorderSide(
-          color: Colors.blue,
-          width: 3,
-        ));
-  }
-
 }
+
+

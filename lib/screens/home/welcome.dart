@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/login.dart';
 import 'package:job_finder/screens/home/sign_up.dart';
+import 'package:job_finder/screens/home/widgets/google_sigin_button.dart';
+
+import '../../service/auth_service.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -26,7 +29,7 @@ crossAxisAlignment: CrossAxisAlignment.start,
 children: <Widget>  [
    const Text('Welcome', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
 ),
-  const Text("Don't  wait for the right opportunity: create it.",
+  const Text("Don't  wait for the right opportunity: grab it.",
   textAlign: TextAlign.center,
   style: TextStyle(color: Colors.blueGrey, fontSize: 15),),
   Image.asset('assests/images/welcome.png'),
@@ -38,6 +41,20 @@ children: <Widget>  [
       child: const Text('LOGIN'),
   ),
   const SizedBox(width: 120,),
+  FutureBuilder( future: AuthService.initializeFirebase(context: context),
+    builder: (context, snapshot) {
+      if (snapshot.hasError) {
+        return const Text('Error initializing Firebase');
+      } else if (snapshot.connectionState == ConnectionState.done) {
+        return const GoogleSignInButton();
+      } return const CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(
+          Color(0xFFF57C00),
+        ),
+      );
+    },
+  ),
+  SizedBox(width: 120,),
   ElevatedButton(
     onPressed: (){
       Navigator.pushReplacement(
@@ -45,6 +62,7 @@ children: <Widget>  [
     },
     child: const Text('Create New User'),
   ),
+  const SizedBox(height: 10),
 ],
 ),
       ),
