@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../home.dart';
+
 class NotificationPage extends StatefulWidget {
 final String buttonValue;
 NotificationPage({required this.buttonValue});
@@ -15,7 +17,22 @@ class _NotificationPage extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Notifications')),
+        appBar: AppBar(title: const Text('Notifications'),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const JobsGrid()),
+              );
+              //action coe when button is pressed
+            },
+            icon: const Icon(
+              Icons. arrow_back,
+              size: 27,
+            ),
+          ),
+
+        ),
     body: Text(widget.buttonValue),
     );
 

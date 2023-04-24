@@ -2,16 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/sucess.dart';
 
 class MyFormPage extends StatefulWidget {
+  // final String? name;
+  // final String? email;
+  // final String? experience;
+  // //String _skills = '';
+  // final String? skills;
+  //
+  // MyFormPage({
+  //   required this.name,
+  //   required this.email,
+  //   required this.experience,
+  //   required this.skills,
+
+  // });
   @override
   _MyFormPageState createState() => _MyFormPageState();
 }
 
 class _MyFormPageState extends State<MyFormPage> {
-  final _formKey = GlobalKey<FormState>();
+  // final TextEditingController _controllerName=TextEditingController();
+  // final TextEditingController  _controllerQualification =TextEditingController();
+  // final TextEditingController _controllerRole =TextEditingController();
+  // final TextEditingController _controllerPhone=TextEditingController();
+  // final TextEditingController _controllerEmail=TextEditingController();
+   final _formKey = GlobalKey<FormState>();
   String _name = '';
-  String _email = '';
-  String _experience = '';
-  String _skills = '';
+   String _email = '';
+   String _experience = '';
+   String _skills = '';
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {

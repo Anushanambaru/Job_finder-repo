@@ -127,17 +127,19 @@ class _JobsGridState extends State<JobsGrid> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextField(
-                        decoration: InputDecoration(
-                          //prefixIcon: Icon(Icons.search),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.search),
-                            onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MyFormPage ()));
-                           },
-                          ),
-                          hintText: 'Search',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            //prefixIcon: Icon(Icons.search),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.search),
+                              onPressed: () {},
+                            ),
+                            hintText: 'Search',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                           ),
                         ),
                       )
