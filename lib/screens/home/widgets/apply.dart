@@ -132,7 +132,7 @@ class _ApplyPageState extends State<ApplyPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MyFormPage(userName: 'Anusha Nambaru', userEmail: 'anushanambaru.yadav@gmail.com'),
+              builder: (context) => MyFormPage()
             ),
           );
         },

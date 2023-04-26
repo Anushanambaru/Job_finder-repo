@@ -40,13 +40,18 @@ class _ProfilePageState extends State<ProfilePage> {
 
  //CollectionReference _reference= FirebaseFirestore.instance.collection('Profile');
 
- String? userEmail;
- String? name;
+  String? userEmail;
+  String? name;
+  String? docId;
+  String? phone;
+  String? experience;
+  String? skills;
+  String? designation;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getEmail();
+    firebaseSetup();
 
   }
 
@@ -105,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
               Text(
-                '$name',  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+                '$name',  style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
             const SizedBox(height: 25.0),
             const Text(
               'Email',
@@ -114,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontSize: 18.0, color: Colors.black54,
               ),
             ),
-             Text('$userEmail', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+             Text('$userEmail', style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
             const SizedBox(height: 25.0),
             const Text(
               'Phone',
@@ -123,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontSize: 18.0, color: Colors.black54,
               ),
             ),
-            const Text('9090909090', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+             Text('${phone??"NA"}', style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
             const SizedBox(height: 25.0),
 
             const Text(
@@ -133,7 +138,27 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontSize: 18.0, color: Colors.black54,
               ),
             ),
-            const Text('Flutter developer', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+             Text('${designation??"NA"}', style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+            const SizedBox(height: 25.0),
+            const Text(
+              'Experience',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 18.0, color: Colors.black54,
+              ),
+            ),
+            Text('${experience??"NA"}', style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+
+            const SizedBox(height: 25.0),
+
+            const Text(
+              'Skills',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 18.0, color: Colors.black54,
+              ),
+            ),
+            Text('${skills??"NA"}', style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
 
             const SizedBox(height: 50.0),
             ElevatedButton(
@@ -155,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  getEmail()async{
+  firebaseSetup()async{
     var myemail = await  FirebaseAuth.instance.currentUser!.email;
     var userQuery = await FirebaseFirestore.instance.collection('users').where('email',isEqualTo: myemail).get();
     var userData = userQuery.docs[0];
@@ -163,7 +188,13 @@ class _ProfilePageState extends State<ProfilePage> {
     userEmail = userData['email'];
     name = userData['fullName'];
         setState(() {
-
+          String userPhone = userData['phone']??'';
+          if(userPhone.isNotEmpty){
+            phone = userData['phone'];
+            experience = userData['experience'];
+            designation = userData['designation'];
+            skills = userData['skills'];
+          }
         });
 
   }
