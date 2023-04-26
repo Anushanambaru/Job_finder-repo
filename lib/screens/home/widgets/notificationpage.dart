@@ -3,16 +3,12 @@ import 'package:flutter/material.dart';
 import '../home.dart';
 
 class NotificationPage extends StatefulWidget {
-final String buttonValue;
-NotificationPage({required this.buttonValue});
 
   @override
   State<NotificationPage> createState() => _NotificationPage();
 }
 
 class _NotificationPage extends State<NotificationPage> {
-
-  String buttonValue = "";
 
   @override
   Widget build(BuildContext context) {
@@ -33,26 +29,23 @@ class _NotificationPage extends State<NotificationPage> {
           ),
 
         ),
-    body: Text(widget.buttonValue),
+     body: ListView.builder(
+       itemCount: 20,
+       itemBuilder: (context, position) {
+         return Card(
+           child: Padding(
+             padding: const EdgeInsets.all(20.0),
+             child: Text(
+               position.toString(),
+               style: TextStyle(fontSize: 22.0),
+             ),
+           ),
+         );
+       },
+     ),
     );
 
   }
 }
 
-// class NotificationPage extends StatelessWidget {
-//   final String floatingActionButtonText;
-//
-//   const NotificationPage({required this.floatingActionButtonText});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("Notification"),
-//       ),
-//       body: Center(
-//         child: Text(floatingActionButtonText),
-//       ),
-//     );
-//   }
-// }
+

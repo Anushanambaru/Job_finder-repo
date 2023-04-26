@@ -21,25 +21,25 @@ class _CreateAccountState extends State<CreateAccount> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar( content: Text(text,style: const TextStyle(color: Colors.white, fontSize:15,fontWeight: FontWeight.w600,),
       ),
-        backgroundColor: Colors.blue ),
+        backgroundColor: Colors.white ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold( backgroundColor: Colors.lightBlue[50],
-        appBar: AppBar( leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.blueGrey[900],),
+      child: Scaffold( backgroundColor: Colors.white,
+        appBar: AppBar( leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.black),
     onPressed: (){
-    Navigator.push(context,MaterialPageRoute(builder: (context) => WelcomePage()),);},),
-          toolbarHeight: 70, backgroundColor: Colors.blue.shade700,
+    Navigator.push(context,MaterialPageRoute(builder: (context) => Loginpage()),);},),
+          toolbarHeight: 70, backgroundColor: Colors.white,
           centerTitle: true,
         ),
         body: Form( key: formkey, autovalidateMode: AutovalidateMode.always,
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const Padding( padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                const Padding( padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: Text( 'CREATE NEW ACCOUNT', style: TextStyle( fontSize: 20, fontWeight: FontWeight.w500, color: Colors.blueGrey), ), ),
                 Padding( padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
                   child: Column(

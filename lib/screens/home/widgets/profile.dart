@@ -1,6 +1,8 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:job_finder/screens/home/edit.dart';
 import 'package:job_finder/screens/home/home.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -38,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
  //CollectionReference _reference= FirebaseFirestore.instance.collection('Profile');
 
- String? useremail;
+ String? userEmail;
  String? name;
   @override
   void initState() {
@@ -75,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 15,),
             CircleAvatar(
@@ -92,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
             // ),
       const SizedBox (height: 10),
       Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
 
           children: <Widget> [
             const Text(
@@ -102,8 +104,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontSize: 18.0, color: Colors.black54,
               ),
             ),
-             const Text(
-                'Anusha Nambaru',  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+              Text(
+                '$name',  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
             const SizedBox(height: 25.0),
             const Text(
               'Email',
@@ -112,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontSize: 18.0, color: Colors.black54,
               ),
             ),
-            const Text('anushan@gmail.com', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
+             Text('$userEmail', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
             const SizedBox(height: 25.0),
             const Text(
               'Phone',
@@ -137,9 +139,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => const JobsGrid()));
+                    context, MaterialPageRoute(builder: (context) =>  EditPage()));
               },
-              child: const Text('Back'),
+              child: const Text('Edit'),
 
             ),
           ],
@@ -155,8 +157,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
   getEmail()async{
     var myemail = await  FirebaseAuth.instance.currentUser!.email;
+    var userQuery = await FirebaseFirestore.instance.collection('users').where('email',isEqualTo: myemail).get();
+    var userData = userQuery.docs[0];
 
-    print('Test : $myemail');
+    userEmail = userData['email'];
+    name = userData['fullName'];
+        setState(() {
+
+        });
+
   }
 
 }

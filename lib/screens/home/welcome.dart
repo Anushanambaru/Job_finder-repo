@@ -33,35 +33,14 @@ children: <Widget>  [
   textAlign: TextAlign.center,
   style: TextStyle(color: Colors.blueGrey, fontSize: 15),),
   Image.asset('assests/images/welcome.png'),
-  ElevatedButton(
-    onPressed: (){
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Loginpage()));
-    },
-      child: const Text('LOGIN'),
-  ),
-  const SizedBox(width: 120,),
-  FutureBuilder( future: AuthService.initializeFirebase(context: context),
-    builder: (context, snapshot) {
-      if (snapshot.hasError) {
-        return const Text('Error initializing Firebase');
-      } else if (snapshot.connectionState == ConnectionState.done) {
-        return const GoogleSignInButton();
-      } return const CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(
-          Color(0xFFF57C00),
-        ),
-      );
-    },
-  ),
+  // ElevatedButton(
+  //   onPressed: (){
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (context) => const Loginpage()));
+  //   },
+  //     child: const Text('LOGIN'),
+  //),
   SizedBox(width: 120,),
-  ElevatedButton(
-    onPressed: (){
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const CreateAccount()));
-    },
-    child: const Text('Create New User'),
-  ),
   const SizedBox(height: 10),
 ],
 ),

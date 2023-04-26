@@ -25,7 +25,7 @@ class _SamplePageState extends State<SamplePage> {
           actions: [IconButton(
             onPressed: () {
               Navigator.push(
-                context, MaterialPageRoute(builder: (context) => NotificationPage(buttonValue: '',)),);
+                context, MaterialPageRoute(builder: (context) => NotificationPage()),);
               //action coe when button is pressed
             },
             icon: const Icon(Icons.notifications_active_outlined, size: 27,),

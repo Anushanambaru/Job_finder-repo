@@ -47,7 +47,7 @@ class _JobFinderState extends State<JobFinder> {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: _isSignedIn ? const JobsGrid() : const SplashPage(),
+      home: _isSignedIn ? const JobsGrid() : SplashPage(),
     );
   }
 }

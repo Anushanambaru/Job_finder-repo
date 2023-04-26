@@ -4,7 +4,6 @@ import 'package:job_finder/screens/home/widgets/notificationpage.dart';
 
 class ApplyPage extends StatefulWidget {
   final String photo;
-  final String text;
   final String role;
   final String job;
   final String vacancy;
@@ -13,24 +12,25 @@ class ApplyPage extends StatefulWidget {
   final String requirement;
   final String date;
   final String location;
+  final String name;
+
 
 
 
 
   ApplyPage({
     required this.photo,
-    required this.text,
     required this.role,
     required this.job,
     required this.vacancy,
-    required this.email,
     required this.phone,
     required this.requirement,
     required this.date,
-    required this.location,
+    required this.location, required this.email, required this.name,
 
 
   });
+
 
 
   @override
@@ -42,7 +42,7 @@ class _ApplyPageState extends State<ApplyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-        title: Text(widget.text,style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),),
+        title: Text(widget.name,style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),),
     ),
       body: SingleChildScrollView(
         child: Column(
@@ -132,7 +132,7 @@ class _ApplyPageState extends State<ApplyPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MyFormPage(),
+              builder: (context) => MyFormPage(userName: 'Anusha Nambaru', userEmail: 'anushanambaru.yadav@gmail.com'),
             ),
           );
         },

@@ -5,6 +5,9 @@ import 'package:job_finder/screens/home/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:job_finder/screens/home/reusable.dart';
 import 'package:job_finder/screens/home/welcome.dart';
+import 'package:job_finder/screens/home/widgets/google_sigin_button.dart';
+
+import '../../service/auth_service.dart';
 
 
 class Loginpage extends StatelessWidget {
@@ -37,22 +40,30 @@ class _AuthpageState extends State<Authpage> {
   Widget build(BuildContext context) {
     return SafeArea( child: Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.blueGrey[900],),
-          onPressed: (){
-            Navigator.push(context,MaterialPageRoute(builder: (context) => WelcomePage()),);},),
-        toolbarHeight: 70, backgroundColor: Colors.white,
+        title: const Text("Login",style: TextStyle(color: Colors.black,
+        ),),
+        titleSpacing: 00.0,
         centerTitle: true,
+        toolbarHeight: 60.2,
+        toolbarOpacity: 0.8,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
+        ),
+        elevation: 0.00,
+        backgroundColor: Colors.lightBlue[50],
       ),
       body: SingleChildScrollView(
         child: Form( autovalidateMode: autoValidate, key: formkey,
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(0,50,0,30),
+                padding: const EdgeInsets.fromLTRB(0,10,0,30),
                 child: Logoimage('assests/images/login.webp'),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: TextFormField( controller: emailController, validator: (mail) {
                   if (!mail.toString().contains('@')) {
                     return 'Please Enter Valid Email';
@@ -80,7 +91,7 @@ class _AuthpageState extends State<Authpage> {
               ),
               const SizedBox( width: 150, height: 15, ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: TextFormField( autovalidateMode: autoValidate, validator: (pass) {
                   if (pass!.length < 6) { return 'password should be min 6 letters';
                   }
@@ -200,6 +211,30 @@ class _AuthpageState extends State<Authpage> {
                   ),
                 ],
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5,15,0,10),
+                child: FutureBuilder( future: AuthService.initializeFirebase(context: context),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text('Error initializing Firebase');
+                    } else if (snapshot.connectionState == ConnectionState.done) {
+                      return const GoogleSignInButton();
+                    } return const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Color(0xFFF57C00),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const Padding(padding: EdgeInsets.fromLTRB(25,20,10,20),),
+              ElevatedButton(
+                onPressed: (){
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (context) => const CreateAccount()));
+                },
+                child: const Text('Create New User'),
               ),
             ],
           ),

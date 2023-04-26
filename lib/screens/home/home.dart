@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:job_finder/screens/home/login.dart';
 import 'package:job_finder/screens/home/widgets/apply.dart';
 import 'package:job_finder/screens/home/widgets/formPage.dart';
 import '../../service/auth_service.dart';
@@ -39,7 +40,7 @@ class _JobsGridState extends State<JobsGrid> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => NotificationPage(buttonValue: '',)),
+                  MaterialPageRoute(builder: (context) => NotificationPage()),
                 );
                 //action coe when button is pressed
               },
@@ -67,7 +68,7 @@ class _JobsGridState extends State<JobsGrid> {
               ListTile(
                 leading: const Icon(Icons.person),
                 title: const Text(' Profile '),
-                onTap: () {
+                onTap: ()  {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -103,7 +104,7 @@ class _JobsGridState extends State<JobsGrid> {
                             IconButton(
                               onPressed: () async {
                                 await authService.signOut(context: context);
-                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const WelcomePage()), (route) => false); }, icon: const Icon( Icons.done, color: Colors.green, ),
+                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const Loginpage()), (route) => false); }, icon: const Icon( Icons.done, color: Colors.green, ),
                             ),
                           ],
                         );
@@ -192,7 +193,7 @@ class _JobsGridState extends State<JobsGrid> {
                                              ],
                                            ),
                                            onTap: () {
-                                             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ApplyPage(photo: photo, text: text, role: role, job: job, vacancy: vacancy, email: email, phone: phone, requirement: requirement, date: date,location: location,) ));
+                                             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ApplyPage( photo: photo, role: role, job: job, vacancy: vacancy, phone: phone, requirement: requirement, date: date,location: location, email: email, name: text,) ));
                                            },
                                          ),
                                        ),
