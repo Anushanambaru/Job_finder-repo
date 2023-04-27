@@ -116,7 +116,7 @@ class _AuthpageState extends State<Authpage> {
                     ),
                     focusedBorder: const OutlineInputBorder( borderSide: BorderSide( color: Color(0xff018001),
                     ),
-                      borderRadius: BorderRadius.only( topLeft: Radius.circular(15),
+                      borderRadius: BorderRadius.only( topLeft: Radius.circular(10),
                           bottomRight: Radius.circular(15)),
                     ),
                   ),
@@ -213,7 +213,7 @@ class _AuthpageState extends State<Authpage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(5,15,0,10),
+                padding: const EdgeInsets.fromLTRB(5,25,0,10),
                 child: FutureBuilder( future: AuthService.initializeFirebase(context: context),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
@@ -228,7 +228,7 @@ class _AuthpageState extends State<Authpage> {
                   },
                 ),
               ),
-              const Padding(padding: EdgeInsets.fromLTRB(25,20,10,20),),
+              const Padding(padding: EdgeInsets.fromLTRB(25,10,10,10),),
               ElevatedButton(
                 onPressed: (){
                   Navigator.pushReplacement(

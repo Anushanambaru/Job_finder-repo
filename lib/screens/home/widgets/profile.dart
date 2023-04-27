@@ -185,17 +185,26 @@ class _ProfilePageState extends State<ProfilePage> {
     var userQuery = await FirebaseFirestore.instance.collection('users').where('email',isEqualTo: myemail).get();
     var userData = userQuery.docs[0];
 
+    bool isExistinguser = userData.data().length > 8;
+
     userEmail = userData['email'];
     name = userData['fullName'];
-        setState(() {
-          String userPhone = userData['phone']??'';
-          if(userPhone.isNotEmpty){
-            phone = userData['phone'];
-            experience = userData['experience'];
-            designation = userData['designation'];
-            skills = userData['skills'];
-          }
-        });
+
+    if(isExistinguser) {
+      String userPhone = userData['phone'] ?? '';
+
+        if (userPhone.isNotEmpty) {
+          phone = userData['phone'];
+          experience = userData['experience'];
+          designation = userData['designation'];
+          skills = userData['skills'];
+        }
+
+    }
+
+    setState(() {
+
+    });
 
   }
 

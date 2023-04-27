@@ -5,17 +5,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_finder/screens/home/widgets/profile.dart';
 
 class EditPage extends StatefulWidget {
-final myController = TextEditingController();
-
-
+  final myController = TextEditingController();
 
   @override
   State<EditPage> createState() => _EditPageState();
 }
 
 class _EditPageState extends State<EditPage> {
-
-
   final nameCtrl = TextEditingController();
   final emailCtrl = TextEditingController();
   final phoneCtrl = TextEditingController();
@@ -30,15 +26,17 @@ class _EditPageState extends State<EditPage> {
   String? skills;
   String? designation;
   final formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
     setUp();
-
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white,
+    return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Edit Profile'),
       ),
@@ -55,19 +53,18 @@ class _EditPageState extends State<EditPage> {
                   controller: nameCtrl,
                   validator: errorValidate,
                   decoration: InputDecoration(
-                    
                     labelText: 'User Name',
                   ),
                 ),
                 SizedBox(height: 16.0),
                 TextFormField(
                   validator: errorValidate,
-                decoration: InputDecoration(
-                  labelText: 'Email',
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                  ),
+                  controller: emailCtrl,
+                  readOnly: true,
                 ),
-                controller:emailCtrl ,
-                readOnly: true,
-              ),
                 SizedBox(height: 16.0),
                 TextFormField(
                   validator: errorValidate,
@@ -106,7 +103,7 @@ class _EditPageState extends State<EditPage> {
                 //
                 SizedBox(height: 32),
                 ElevatedButton(
-                  onPressed: ()async {
+                  onPressed: () async {
                     Fluttertoast.showToast(
                       msg: " Updated Successfully!",
                       toastLength: Toast.LENGTH_LONG,
@@ -116,22 +113,29 @@ class _EditPageState extends State<EditPage> {
                       textColor: Colors.white,
                       fontSize: 19.0,
                     );
-                             if(formKey.currentState!.validate()){
-
-                               Map<Object,Object?> data = {
-                                 "phone" : phoneCtrl.text,
-                                 "experience" : experienceCtrl.text,
-                                 "designation" : designationCtrl.text,
-                                 "skills" : skillsCtrl.text,
-                                 'fullName' : nameCtrl.text
-                               };
-                               await FirebaseFirestore.instance.collection('users').doc(docId!).update(data).then((value) {
-                                 print("User Data Updated Success");
-                                 Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ProfilePage(profileImageUrl: "https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-blue-working-woman-illustration-womanbusinessoffice-png-image_591421.jpg")), (route) => false);
-                               }
-                               ).catchError((error)=> print('User data Update failed Due to : $error'));
-                             }
-
+                    if (formKey.currentState!.validate()) {
+                      Map<Object, Object?> data = {
+                        "phone": phoneCtrl.text,
+                        "experience": experienceCtrl.text,
+                        "designation": designationCtrl.text,
+                        "skills": skillsCtrl.text,
+                        'fullName': nameCtrl.text
+                      };
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(docId!)
+                          .update(data)
+                          .then((value) {
+                        print("User Data Updated Success");
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage(
+                                    profileImageUrl:
+                                        "https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-blue-working-woman-illustration-womanbusinessoffice-png-image_591421.jpg")),
+                            (route) => false);
+                      }).catchError((error) =>
+                              print('User data Update failed Due to : $error'));
+                    }
                   },
                   child: Text('update'),
                 )
@@ -143,39 +147,42 @@ class _EditPageState extends State<EditPage> {
     );
   }
 
-    Future<void> setUp()async{
-      var myemail = await  FirebaseAuth.instance.currentUser!.email;
-      var userQuery = await FirebaseFirestore.instance.collection('users').where('email',isEqualTo: myemail).get();
-      var userData = userQuery.docs[0];
+  Future<void> setUp() async {
+    var myemail = await FirebaseAuth.instance.currentUser!.email;
+    var userQuery = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: myemail)
+        .get();
+    var userData = userQuery.docs[0];
 
-      userEmail = userData['email'];
-      name = userData['fullName'];
-      docId = userData['uid'];
-      print('User id : $docId');
-      String userPhone = userData['phone']??'';
-      if(userPhone.isNotEmpty){
+    userEmail = userData['email'];
+    name = userData['fullName'];
+    docId = userData['uid'];
+    print('User id : $docId');
+    bool isExistinguser = userData.data().length > 8;
+    if(isExistinguser) {
+      String userPhone = userData['phone'] ?? '';
+      if (userPhone.isNotEmpty) {
         phone = userData['phone'];
         experience = userData['experience'];
         designation = userData['designation'];
         skills = userData['skills'];
       }
-      emailCtrl.text =userEmail!;
-      nameCtrl.text = name!;
-      phoneCtrl.text = phone!;
-      experienceCtrl.text = experience!;
-      designationCtrl.text = designation!;
-      skillsCtrl.text = skills!;
-      setState(() {
-
-      });
-
     }
-    
-    String? errorValidate(String? value){
-    if(value!.isEmpty){
+    emailCtrl.text = userEmail!;
+    nameCtrl.text = name!;
+    phoneCtrl.text = phone!;
+    experienceCtrl.text = experience!;
+    designationCtrl.text = designation!;
+    skillsCtrl.text = skills!;
+    setState(() {});
+  }
+
+  String? errorValidate(String? value) {
+    if (value!.isEmpty) {
       return "Required filed";
-    } else{
+    } else {
       return null;
     }
-    }
+  }
 }

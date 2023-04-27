@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/login.dart';
 import 'package:job_finder/screens/home/widgets/apply.dart';
 import 'package:job_finder/screens/home/widgets/formPage.dart';
+import 'package:job_finder/screens/home/widgets/sample.dart';
 import '../../service/auth_service.dart';
 import 'welcome.dart';
 import 'package:job_finder/screens/home/widgets/contact.dart';
@@ -135,7 +136,10 @@ class _JobsGridState extends State<JobsGrid> {
                             //prefixIcon: Icon(Icons.search),
                             suffixIcon: IconButton(
                               icon: Icon(Icons.search),
-                              onPressed: () {},
+                              onPressed: () {Navigator.push(
+    context, MaterialPageRoute(builder: (context) => SamplePage()),);
+    //action coe when button is pressed
+    },
                             ),
                             hintText: 'Search',
                             border: OutlineInputBorder(
