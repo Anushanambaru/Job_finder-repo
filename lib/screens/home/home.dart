@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/login.dart';
+import 'package:job_finder/screens/home/widgets/applied_Job.dart';
 import 'package:job_finder/screens/home/widgets/apply.dart';
 import 'package:job_finder/screens/home/widgets/formPage.dart';
 import 'package:job_finder/screens/home/widgets/sample.dart';
+import 'package:job_finder/screens/home/widgets/user_recruiter.dart';
 import '../../service/auth_service.dart';
 import 'welcome.dart';
 import 'package:job_finder/screens/home/widgets/contact.dart';
@@ -22,11 +25,13 @@ class _JobsGridState extends State<JobsGrid> {
   List jobsgridlistData = [];
   bool isLoading = false;
   AuthService authService = AuthService();
+  int notificationCount = 0;
 
   @override
   void initState() {
     super.initState();
     // firebaseSetup();
+    notificationLength();
   }
 
   @override
@@ -37,18 +42,33 @@ class _JobsGridState extends State<JobsGrid> {
           title: const Text('Job Finder'),
           centerTitle: true,
           actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NotificationPage()),
-                );
-                //action coe when button is pressed
-              },
-              icon: const Icon(
-                Icons.notifications_active_outlined,
-                size: 27,
-              ),
+            Stack(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NotificationPage()),
+                    );
+                    //action coe when button is pressed
+                  },
+                  icon: const Icon(
+                    Icons.notifications_active_outlined,
+                    size: 27,
+                  ),
+                ),
+                Positioned(
+                  top: 3,
+                  right:5,
+                  child: Badge(
+                    largeSize: 13,
+                    smallSize: 10,
+                    alignment: Alignment.center,
+                    backgroundColor: Colors.red,
+                    child: Text("$notificationCount"),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -105,7 +125,7 @@ class _JobsGridState extends State<JobsGrid> {
                             IconButton(
                               onPressed: () async {
                                 await authService.signOut(context: context);
-                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const Loginpage()), (route) => false); }, icon: const Icon( Icons.done, color: Colors.green, ),
+                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const MainPage()), (route) => false); }, icon: const Icon( Icons.done, color: Colors.green, ),
                             ),
                           ],
                         );
@@ -117,6 +137,16 @@ class _JobsGridState extends State<JobsGrid> {
                 title: const Text(
                   "Logout", style: TextStyle(color: Colors.black),
                 ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.local_post_office_outlined),
+                title: const Text(' Recruiter '),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppliedJobPage()),
+                  );
+                },
               ),
             ],
           ),
@@ -253,5 +283,15 @@ class _JobsGridState extends State<JobsGrid> {
 //   isLoading = false;
 // });
 
+  }
+
+  void notificationLength()async {
+
+     final user_Uid =  FirebaseAuth.instance.currentUser!.uid;
+     final notificationSetup = await FirebaseFirestore.instance.collection("Applied_Job").where("user_id",isEqualTo: user_Uid ).get();
+       notificationCount = notificationSetup.docs.length;
+       setState(() {
+
+       });
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/login.dart';
 import 'package:job_finder/screens/home/welcome.dart';
+import 'package:job_finder/screens/home/widgets/user_recruiter.dart';
 
 
 class SplashPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _SplashState extends State<SplashPage> {
   _navigatetohome() async {
     await Future.delayed(Duration(seconds: 4), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Loginpage()));
+        context, MaterialPageRoute(builder: (context) => MainPage()));
   }
 
   @override
@@ -39,7 +40,8 @@ class _SplashState extends State<SplashPage> {
               const Text("Don't  wait for the right opportunity: grab it.",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.blueGrey, fontSize: 15),),
-              Image.asset('assests/images/welcome.png'),
+              SizedBox(height: 30,),
+              Image.asset('assests/images/jobs.jpg'),
               // ElevatedButton(
               //   onPressed: (){
               //     Navigator.pushReplacement(

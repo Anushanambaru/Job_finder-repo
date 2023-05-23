@@ -4,8 +4,9 @@ import 'package:job_finder/screens/home/forgotPassword.dart';
 import 'package:job_finder/screens/home/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:job_finder/screens/home/reusable.dart';
-import 'package:job_finder/screens/home/welcome.dart';
+import 'package:job_finder/screens/home/widgets/recruiter_Login.dart';
 import 'package:job_finder/screens/home/widgets/google_sigin_button.dart';
+import 'package:job_finder/screens/home/widgets/user_recruiter.dart';
 
 import '../../service/auth_service.dart';
 
@@ -42,6 +43,21 @@ class _AuthpageState extends State<Authpage> {
       appBar: AppBar(
         title: const Text("Login",style: TextStyle(color: Colors.black,
         ),),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+          // the method which is called
+          // when button is pressed
+          onPressed: () {
+            setState(
+                  () {
+                Navigator.push( context, MaterialPageRoute( builder: (context) => const MainPage(), ),
+                );
+              },
+            );
+          },
+        ),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,

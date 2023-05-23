@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
+import 'package:job_finder/screens/home/welcome.dart';
+import 'package:job_finder/screens/home/widgets/recruiter_Login.dart';
 
 
+class SignupPage extends StatefulWidget {
+  const SignupPage({Key? key}) : super(key: key);
 
-class CreateAccount extends StatefulWidget {
-  const CreateAccount({Key? key}) : super(key: key);
-
-  @override State<CreateAccount> createState() => _CreateAccountState();
+  @override State<SignupPage> createState() => _SignupPageState();
 }
 
-class _CreateAccountState extends State<CreateAccount> {
+class _SignupPageState extends State<SignupPage> {
   String? ConfirmPassword; String? Email; String? errorMessage = '';
   TextEditingController emailController = TextEditingController(); String? Password;
   TextEditingController passwordController = TextEditingController();
@@ -22,7 +22,7 @@ class _CreateAccountState extends State<CreateAccount> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar( content: Text(text,style: const TextStyle(color: Colors.white, fontSize:15,fontWeight: FontWeight.w600,),
       ),
-        backgroundColor: Colors.white ),
+          backgroundColor: Colors.white ),
     );
   }
 
@@ -31,8 +31,8 @@ class _CreateAccountState extends State<CreateAccount> {
     return SafeArea(
       child: Scaffold( backgroundColor: Colors.white,
         appBar: AppBar( leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.black),
-    onPressed: (){
-    Navigator.push(context,MaterialPageRoute(builder: (context) => Loginpage()),);},),
+          onPressed: (){
+            Navigator.push(context,MaterialPageRoute(builder: (context) => Recruiterpage()),);},),
           toolbarHeight: 70, backgroundColor: Colors.white,
           centerTitle: true,
         ),
@@ -149,7 +149,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             if (Password == ConfirmPassword) {
                               try { autovalidate = AutovalidateMode.disabled;
                               FirebaseAuth.instance .createUserWithEmailAndPassword( email: emailController.text, password: passwordController.text)
-                                  .then( (value) { Navigator.push( context, MaterialPageRoute( builder: (context) => const Loginpage(), ), );
+                                  .then( (value) { Navigator.push( context, MaterialPageRoute( builder: (context) => const Recruiterpage(), ), );
                               showSnackBar('Account Created',Colors.green); } );
                               }
                               on FirebaseAuthException catch (e) { setState(() {

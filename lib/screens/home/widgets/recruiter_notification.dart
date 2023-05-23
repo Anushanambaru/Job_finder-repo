@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:job_finder/screens/home/widgets/recruiter_notification.dart';
 import 'package:job_finder/screens/home/widgets/response_Page.dart';
 
 import '../home.dart';
 
-class NotificationPage extends StatefulWidget {
+class RenotificationPage extends StatefulWidget {
 
   @override
   State<RenotificationPage> createState() => _NotificationPage();
@@ -40,7 +39,7 @@ class _NotificationPage extends State<RenotificationPage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => JobsGrid()),
+              MaterialPageRoute(builder: (context) => ResponsePage()),
             );
           },
           icon: const Icon(
@@ -62,10 +61,12 @@ class _NotificationPage extends State<RenotificationPage> {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text:"${userListNotification[index]['email']}"  '    $formattedTime m',
+                        text:"${userListNotification[index]['name']}"  '    $formattedTime m',
                         style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontFamily:'Roboto',
+                            fontWeight: FontWeight.normal
                         ),
                       ),
                     ],
@@ -77,17 +78,42 @@ class _NotificationPage extends State<RenotificationPage> {
                 //
                 // ,
               ),
-              subtitle: Text('sucessfully applied') ,
+              subtitle: Text('${userListNotification[index]['email']}') ,
               onExpansionChanged: (value){
                 setState(() {
                   isExpand = value;
                 });
               },
               children: [
-                Text("${userListNotification[index]['name']} you have applied for this job", style:  TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,),
+                SizedBox(height: 20,),
+                Text("Name: ${userListNotification[index]['name']}", style:  TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontFamily:'Cupertino',
+                    fontWeight: FontWeight.w900),
                 ),
+                SizedBox(height: 20,),
+                Text("Role: ${userListNotification[index]['designation']}", style:  TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontFamily:'Cupertino',
+                    fontWeight: FontWeight.w900),
+                ),
+                SizedBox(height: 20,),
+                Text("Skills:${userListNotification[index]['skills']}", style:  TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontFamily:'Cupertino',
+                    fontWeight: FontWeight.w900),
+                ),
+                SizedBox(height: 20,),
+                Text(" Experience: ${userListNotification[index]['experience']}", style:  TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontFamily:'Cupertino',
+                    fontWeight: FontWeight.w900),
+                ),
+
                 // Text('Current Time: $formattedTime',
                 // style: TextStyle(fontSize: 24),
                 // ),

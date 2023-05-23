@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:job_finder/screens/home/home.dart';
+
+import '../home.dart';
 
 class MyFormPage extends StatefulWidget {
   final myController = TextEditingController();
@@ -12,12 +13,13 @@ class MyFormPage extends StatefulWidget {
 }
 
 class _MyFormPageState extends State<MyFormPage> {
-  final nameCtrl = TextEditingController();
-  final emailCtrl = TextEditingController();
-  final phoneCtrl = TextEditingController();
-  final designationCtrl = TextEditingController();
-  final experienceCtrl = TextEditingController();
-  final skillsCtrl = TextEditingController();
+  TextEditingController nameCtrl = TextEditingController();
+  TextEditingController emailCtrl = TextEditingController();
+  TextEditingController phoneCtrl = TextEditingController();
+  TextEditingController designationCtrl = TextEditingController();
+  TextEditingController experienceCtrl = TextEditingController();
+  TextEditingController skillsCtrl = TextEditingController();
+
 
   String? userEmail;
   String? name;
@@ -47,14 +49,14 @@ class _MyFormPageState extends State<MyFormPage> {
         title: Text('My Form Page'),
       ),
       body: SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
+    child: Padding(
+    padding: EdgeInsets.all(16.0),
+    child: Form(
+    key: _formKey,
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+    TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
                 // initialValue: 'Anusha',
                 decoration: InputDecoration(labelText: 'Name'),
                 controller: nameCtrl,
@@ -70,6 +72,15 @@ class _MyFormPageState extends State<MyFormPage> {
                 validator: errorValidate,
 
               ),
+      SizedBox(height: 16.0),
+
+      TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
+        //initialValue: '',
+        decoration: InputDecoration(labelText: 'Designation'),
+        controller: designationCtrl,
+        validator: errorValidate,
+
+      ),
               SizedBox(height: 16.0),
 
               TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
@@ -103,6 +114,8 @@ class _MyFormPageState extends State<MyFormPage> {
                   );
                   Navigator.pushReplacement(
                       context, MaterialPageRoute(builder: (context) => JobsGrid()));
+
+                  appliedJobSetup();
                 },
                 child: Text("Submit"),
               ),
@@ -128,6 +141,7 @@ class _MyFormPageState extends State<MyFormPage> {
       phone = userData['phone'];
       experience = userData['experience'];
       designation = userData['designation'];
+      // print('user designation : $designation');
       skills = userData['skills'];
     }
     emailCtrl.text =userEmail!;
@@ -144,10 +158,34 @@ class _MyFormPageState extends State<MyFormPage> {
 
   String? errorValidate(String? value){
     if(value!.isEmpty){
-      return "Required filed";
+      return "Required field";
     } else{
       return null;
     }
+  }
+  appliedJobSetup() async{
+
+    Map<String,dynamic> data = {
+      'name' : nameCtrl.text,
+      'email' : emailCtrl.text,
+      'experience' : experienceCtrl.text,
+      'skills' : skillsCtrl.text,
+      'reg_time' : DateTime.now(),
+      'user_id' : docId!,
+       'designation' :designationCtrl.text,
+     // 'company_name' :
+    };
+
+    final  uploadData =  await FirebaseFirestore.instance.collection('Applied_Job').add(data);
+
+    if(uploadData.id != null && uploadData.id != ''){
+      print("Data uploadded Success");
+    } else {
+      print('Upload Failed');
+    }
+
+
+
   }
 }
 

@@ -5,8 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/home.dart';
-import 'package:job_finder/screens/home/welcome.dart';
-
+import 'package:job_finder/screens/home/widgets/recruiter_Login.dart';
 import '../helper_functions/helper_function.dart';
 
 class AuthService {
