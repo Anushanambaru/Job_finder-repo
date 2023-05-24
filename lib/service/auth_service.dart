@@ -13,14 +13,15 @@ class AuthService {
   // signout
   Future<void> signOut({required BuildContext context}) async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
-    try { await HelperFunctions.saveUserLoggedInStatus(false);
-    await HelperFunctions.saveUserEmailSF("");
-    await HelperFunctions.saveUserNameSF("");
-    if (!kIsWeb) { await googleSignIn.signOut();
-    }
-    await firebaseAuth.signOut();
-    }
-    catch (e) {
+    try {
+      await HelperFunctions.saveUserLoggedInStatus(false);
+      await HelperFunctions.saveUserEmailSF("");
+      await HelperFunctions.saveUserNameSF("");
+      if (!kIsWeb) {
+        await googleSignIn.signOut();
+      }
+      await firebaseAuth.signOut();
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         customSnackBar(
           content: 'Error signing out. Try again.',
@@ -36,60 +37,62 @@ class AuthService {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const JobsGrid(),
+        MaterialPageRoute(
+          builder: (context) => const JobsGrid(),
         ),
       );
     }
     return firebaseApp;
   }
 
-  static Future<User?> signInWithGoogle({
-    required BuildContext context}) async {
+  static Future<User?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
       try {
-        final UserCredential userCredential = await auth.signInWithPopup(
-            authProvider);
+        final UserCredential userCredential =
+            await auth.signInWithPopup(authProvider);
         user = userCredential.user;
       } catch (e) {
         log(e.toString());
       }
-    }
-    else {
+    } else {
       final GoogleSignIn googleSignIn = GoogleSignIn();
-      final GoogleSignInAccount? googleSignInAccount = await googleSignIn
-          .signIn();
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
       if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount
-            .authentication;
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
         final AuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleSignInAuthentication.accessToken,
-          idToken: googleSignInAuthentication.idToken,);
+          idToken: googleSignInAuthentication.idToken,
+        );
         try {
-          final UserCredential userCredential = await auth.signInWithCredential(
-              credential);
+          final UserCredential userCredential =
+              await auth.signInWithCredential(credential);
           user = userCredential.user;
-        }
-        on FirebaseAuthException catch (e) {
+        } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
-            ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
-              content: 'The account already exists with a different credential',
-            ),
+            ScaffoldMessenger.of(context).showSnackBar(
+              customSnackBar(
+                content:
+                    'The account already exists with a different credential',
+              ),
+            );
+          } else if (e.code == 'invalid-credential') {
+            ScaffoldMessenger.of(context).showSnackBar(
+              customSnackBar(
+                content:
+                    'Error occurred while accessing credentials. Try again.',
+              ),
             );
           }
-          else if (e.code == 'invalid-credential') {
-            ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
-              content: 'Error occurred while accessing credentials. Try again.',
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            customSnackBar(
+              content: 'Error occurred using Google Sign In. Try again.',
             ),
-            );
-          }
-        }
-        catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
-            content: 'Error occurred using Google Sign In. Try again.',
-          ),
           );
         }
       }
@@ -97,13 +100,28 @@ class AuthService {
     return user;
   }
 
-  static SnackBar customSnackBar({
-    required String content}) {
-    return SnackBar(backgroundColor: Colors.black,
-      content: Text(content,
+  static SnackBar customSnackBar({required String content}) {
+    return SnackBar(
+      backgroundColor: Colors.black,
+      content: Text(
+        content,
         style: const TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
       ),
     );
   }
-}
 
+  Future loginWithUserNameandPassword(String email, String password) async {
+    try {
+      print(email + password);
+      User user = (await firebaseAuth.signInWithEmailAndPassword(
+              email: email, password: password))
+          .user!;
+      print(user);
+      if (user != null) {
+        return true;
+      }
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
+  }
+}

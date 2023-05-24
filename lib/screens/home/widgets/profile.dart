@@ -182,13 +182,18 @@ class _ProfilePageState extends State<ProfilePage> {
 
   firebaseSetup()async{
     var myemail = await  FirebaseAuth.instance.currentUser!.email;
+    print("my email : $myemail");
     var userQuery = await FirebaseFirestore.instance.collection('users').where('email',isEqualTo: myemail).get();
+    print("Hi Rehaman ");
+    print(userQuery.docs.length);
     var userData = userQuery.docs[0];
 
     bool isExistinguser = userData.data().length > 8;
 
     userEmail = userData['email'];
     name = userData['fullName'];
+
+    print("Nambaru : $userEmail");
 
     if(isExistinguser) {
       String userPhone = userData['phone'] ?? '';
