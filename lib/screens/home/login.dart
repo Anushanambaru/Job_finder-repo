@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/home.dart';
 import 'package:job_finder/screens/home/forgotPassword.dart';
@@ -13,7 +12,6 @@ import 'package:job_finder/screens/home/widgets/user_recruiter.dart';
 
 import '../../helper_functions/helper_function.dart';
 import '../../service/auth_service.dart';
-import '../../service/database_service.dart';
 
 class Loginpage extends StatelessWidget {
   const Loginpage({super.key});
@@ -33,15 +31,101 @@ class _AuthpageState extends State<Authpage> {
   final formkey = GlobalKey<FormState>();
   bool passwordvisibility = true;
   String? errormessage = '';
+  bool _isLoading = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
-  final formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
-  AuthService authService = AuthService();
-  String email = "";
-  String password = "";
-// final DatabaseReference _loginRef = FirebaseDatabase.instance.reference().child('login_details');
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _login() async {
+    if (formkey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+      try {
+        final String email = emailController.text.trim();
+        final String password = passwordController.text.trim();
+        final UserCredential userCredential =
+            await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        final User? user = userCredential.user;
+
+        if (user != null) {
+          // Store login details in the user collection
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .set({
+            'email': user.email,
+            'lastLogin': DateTime.now(),
+          });
+
+          // Navigate to the home screen or any other screen after successful login
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const JobsGrid(),
+            ),
+          );
+          showSnackBar('LogIn Successful', const Color(0xFF52AE3F));
+          setState(() {
+            _isLoading = true;
+          });
+        }
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: const Text('user-not-found'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+        if (e.code == 'wrong-password') {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: const Text('wrong-password'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+        if (_auth == null) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: const Text('No Internet connection!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      }
+    }
+  }
 
   void showSnackBar(String text, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -81,8 +165,8 @@ class _AuthpageState extends State<Authpage> {
             icon: const Icon(
               Icons.arrow_back,
             ),
-// the method which is called
-// when button is pressed
+            // the method which is called
+            // when button is pressed
             onPressed: () {
               setState(
                 () {
@@ -215,9 +299,6 @@ class _AuthpageState extends State<Authpage> {
                       fontSize: 15,
                       fontWeight: FontWeight.normal,
                     ),
-                      validator: (val) { if (val!.length < 6) {
-                      return "Password must be at least 6 characters"; } else { return null; } },
-                    onChanged: (val) { setState(() { password = val; }); },
                   ),
                 ),
                 Padding(
@@ -246,16 +327,17 @@ class _AuthpageState extends State<Authpage> {
                         padding: const EdgeInsets.fromLTRB(110, 8, 0, 0),
                         child: ElevatedButton(
                           onPressed: () {
-                            login();
+                            _login();
                           },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30))),
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.blue,
+                          ),
                           child: const Text(
-                            "Login",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ),
@@ -299,34 +381,6 @@ class _AuthpageState extends State<Authpage> {
         ),
       ),
     );
-  }
-
-  login() async {
-    if (formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-      await authService
-          .loginWithUserNameandPassword(email, password)
-          .then((value) async {
-        if (value == true) {
-          print(value);
-          QuerySnapshot snapshot =
-              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                  .gettingUserData(email);
-// saving the values to our shared preferences
-          await HelperFunctions.saveUserLoggedInStatus(true);
-          await HelperFunctions.saveUserEmailSF(email);
-          await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
-          nextScreenReplace(context, const JobsGrid());
-        } else {
-          showSnackbar(context, Colors.red, value);
-          setState(() {
-            _isLoading = false;
-          });
-        }
-      });
-    }
   }
 }
 

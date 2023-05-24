@@ -63,7 +63,7 @@ class _JobsGridState extends State<JobsGrid> {
                   child: Badge(
                     largeSize: 13,
                     smallSize: 10,
-                    alignment: Alignment.center,
+                    alignment: AlignmentDirectional.center,
                     backgroundColor: Colors.red,
                     child: Text("$notificationCount"),
                   ),
