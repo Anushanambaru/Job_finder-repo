@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:job_finder/screens/home/widgets/notificationpage.dart';
 import 'package:job_finder/screens/home/widgets/recruiter_Login.dart';
+import 'package:job_finder/screens/home/widgets/recruiter_notification.dart';
+import 'package:job_finder/screens/home/widgets/user_recruiter.dart';
 import '../../../service/auth_service.dart';
 import 'job_response.dart';
 
@@ -31,10 +33,18 @@ class _AppliedJobPageState extends State<AppliedJobPage> {
         appBar: AppBar(
           title: const Text('Job Finder'),
           centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MainPage()),);
+              //action coe when button is pressed
+            },
+            icon: const Icon(Icons.logout, size: 27,),
+          ),
           actions: [IconButton(
             onPressed: () {
               Navigator.push(
-                context, MaterialPageRoute(builder: (context) => NotificationPage()),);
+                context, MaterialPageRoute(builder: (context) => RecruiterAlertPage()),);
               //action coe when button is pressed
             },
             icon: const Icon(Icons.notifications_active_outlined, size: 27,),

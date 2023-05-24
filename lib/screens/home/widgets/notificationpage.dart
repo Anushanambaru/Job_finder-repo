@@ -8,12 +8,14 @@ import 'package:job_finder/screens/home/widgets/response_Page.dart';
 import '../home.dart';
 
 class NotificationPage extends StatefulWidget {
+  const NotificationPage({super.key});
+
 
   @override
-  State<RenotificationPage> createState() => _NotificationPage();
+  State<NotificationPage> createState() => _NotificationPageState();
 }
 
-class _NotificationPage extends State<RenotificationPage> {
+class _NotificationPageState extends State<NotificationPage> {
   List userListNotification = [];
 
   bool isExpand = false;
@@ -25,7 +27,7 @@ class _NotificationPage extends State<RenotificationPage> {
   }
   void main() {
     runApp(MaterialApp(
-      home: RenotificationPage(),
+      home: RecruiterAlertPage(),
     ));
   }
 
@@ -62,31 +64,35 @@ class _NotificationPage extends State<RenotificationPage> {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text:"${userListNotification[index]['email']}"  '    $formattedTime m',
+                        text:"${userListNotification[index]['email']}"  ' $formattedTime m',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 12,
+                          fontSize: 12.5,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.normal
                         ),
                       ),
                     ],
                   ),
-
                 ),
                 //   "${userListNotification[index]['name']}",
                 //   style: TextStyle(fontSize: 22.0),
                 //
                 // ,
               ),
-              subtitle: Text('sucessfully applied') ,
+              subtitle: Text('sucessfully applied', style:  TextStyle(
+                color: Colors.blueGrey[800],
+                fontSize: 16,)) ,
               onExpansionChanged: (value){
                 setState(() {
                   isExpand = value;
                 });
               },
               children: [
+                SizedBox(height: 20,),
                 Text("${userListNotification[index]['name']} you have applied for this job", style:  TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,),
+                  color: Colors.black87,
+                  fontSize: 18,),
                 ),
                 // Text('Current Time: $formattedTime',
                 // style: TextStyle(fontSize: 24),

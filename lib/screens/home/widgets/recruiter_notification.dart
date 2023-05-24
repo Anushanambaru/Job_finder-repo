@@ -2,17 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:job_finder/screens/home/widgets/applied_Job.dart';
 import 'package:job_finder/screens/home/widgets/response_Page.dart';
 
 import '../home.dart';
 
-class RenotificationPage extends StatefulWidget {
+class RecruiterAlertPage extends StatefulWidget {
+  const RecruiterAlertPage({super.key});
+
 
   @override
-  State<RenotificationPage> createState() => _NotificationPage();
+  State<RecruiterAlertPage> createState() =>_RecruiterAlertPageState();
 }
 
-class _NotificationPage extends State<RenotificationPage> {
+
+class  _RecruiterAlertPageState extends State<RecruiterAlertPage> {
   List userListNotification = [];
 
   bool isExpand = false;
@@ -24,7 +28,7 @@ class _NotificationPage extends State<RenotificationPage> {
   }
   void main() {
     runApp(MaterialApp(
-      home: RenotificationPage(),
+      home: RecruiterAlertPage(),
     ));
   }
 
@@ -39,7 +43,7 @@ class _NotificationPage extends State<RenotificationPage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ResponsePage()),
+              MaterialPageRoute(builder: (context) => AppliedJobPage()),
             );
           },
           icon: const Icon(

@@ -64,7 +64,7 @@ class _AuthpageState extends State<Authpage> {
       elevation: 0.00,
       backgroundColor: Colors.lightGreen
     ),
-      body: Padding( padding: const EdgeInsets.fromLTRB(45, 150, 45, 0),
+      body: Padding( padding: const EdgeInsets.fromLTRB(45, 150, 35, 0),
         child: SingleChildScrollView(
           child: Form( autovalidateMode: autoValidate, key: formkey,
             child: Column(
