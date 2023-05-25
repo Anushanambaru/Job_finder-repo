@@ -15,7 +15,6 @@ class AppliedJobPage extends StatefulWidget {
 }
 
 class _AppliedJobPageState extends State<AppliedJobPage> {
-  // List jobsgridlistData = [];
   List appliedjobsData=[];
   bool isLoading = false;
   AuthService authService = AuthService();
@@ -82,16 +81,17 @@ class _AppliedJobPageState extends State<AppliedJobPage> {
 
 
                         return      Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0)),
-                          height: 200,
+                          decoration: BoxDecoration( color: Colors.yellow[50],
+                              borderRadius: BorderRadius.circular(15.0)),
+                          height: 70,
                           child: Card(
+                            color: Colors.lightBlue[50],
                             semanticContainer: true,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             child: InkWell(
                               child: Column(
                                 children: [
-                                  Text("$name", style: TextStyle(fontSize:20, fontWeight: FontWeight.bold ),)
+                                  Text("$name", style: TextStyle(fontSize:20, fontWeight: FontWeight.w800,fontFamily: 'Raleway', fontStyle: FontStyle.italic ),)
                                 ],
                               ),
                               onTap: () {

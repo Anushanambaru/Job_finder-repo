@@ -126,22 +126,6 @@ class _ResponseJobState extends State<ResponseJob> {
                     //   padding: const EdgeInsets.fromLTRB(5,10,0,5),
                     //   child: Text(widget.job,style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal)),
                     // ),
-                    // const Padding(
-                    //   padding: EdgeInsets.fromLTRB(0,10,0,10),
-                    //   child: Text('Skills & Requirements :',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.fromLTRB(5,10,0,5),
-                    //   child: Text(widget.requirement,style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal)),
-                    // ),
-                    // const Padding(
-                    //   padding: EdgeInsets.fromLTRB(0,10,0,2),
-                    //   child: Text('Contact email :',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.fromLTRB(5,10,0,8),
-                    //   child: Text(widget.email,style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.lightBlue)),
-                    // ),
 
                     SizedBox(height: 15,),
                     TextFormField( style: TextStyle(fontWeight: FontWeight.w700),

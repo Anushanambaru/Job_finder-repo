@@ -30,7 +30,6 @@ class _MyFormPageState extends State<MyFormPage> {
   String? designation;
 
   final _formKey = GlobalKey<FormState>();
-
   @override
   void initState() {
     super.initState();
@@ -49,82 +48,82 @@ class _MyFormPageState extends State<MyFormPage> {
         title: Text('My Form Page'),
       ),
       body: SingleChildScrollView(
-    child: Padding(
-    padding: EdgeInsets.all(16.0),
-    child: Form(
-    key: _formKey,
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-    TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
-                // initialValue: 'Anusha',
-                decoration: InputDecoration(labelText: 'Name'),
-                controller: nameCtrl,
-                validator: errorValidate,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
+                  // initialValue: 'Anusha',
+                  decoration: InputDecoration(labelText: 'Name'),
+                  controller: nameCtrl,
+                  validator: errorValidate,
 
-              ),
-              SizedBox(height: 16.0),
+                ),
+                SizedBox(height: 16.0),
 
-              TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
-                // initialValue: '',
-                decoration: InputDecoration(labelText: 'Email'),
-                controller: emailCtrl,
-                validator: errorValidate,
+                TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
+                  // initialValue: '',
+                  decoration: InputDecoration(labelText: 'Email'),
+                  controller: emailCtrl,
+                  validator: errorValidate,
 
-              ),
-      SizedBox(height: 16.0),
+                ),
+                SizedBox(height: 16.0),
 
-      TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
-        //initialValue: '',
-        decoration: InputDecoration(labelText: 'Designation'),
-        controller: designationCtrl,
-        validator: errorValidate,
+                TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
+                  //initialValue: '',
+                  decoration: InputDecoration(labelText: 'Designation'),
+                  controller: designationCtrl,
+                  validator: errorValidate,
 
-      ),
-              SizedBox(height: 16.0),
+                ),
+                SizedBox(height: 16.0),
 
-              TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
-                //initialValue: '',
-                decoration: InputDecoration(labelText: 'Experience'),
-                controller: experienceCtrl,
-                validator: errorValidate,
+                TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
+                  //initialValue: '',
+                  decoration: InputDecoration(labelText: 'Experience'),
+                  controller: experienceCtrl,
+                  validator: errorValidate,
 
-              ),
-              SizedBox(height: 16.0),
+                ),
+                SizedBox(height: 16.0),
 
-              TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
-                //initialValue: '',
-                decoration: InputDecoration(labelText: 'Skills'),
-                controller: skillsCtrl,
-                validator: errorValidate,
+                TextFormField( style: TextStyle(fontWeight: FontWeight.w700),
+                  //initialValue: '',
+                  decoration: InputDecoration(labelText: 'Skills'),
+                  controller: skillsCtrl,
+                  validator: errorValidate,
 
-              ),
-              SizedBox(height: 20.0),
+                ),
+                SizedBox(height: 20.0),
 
-              ElevatedButton(
-                onPressed: () {
-                  Fluttertoast.showToast(
-                    msg: "Successfully applied!",
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.SNACKBAR,
-                    timeInSecForIosWeb: 2,
-                    backgroundColor: Colors.blueGrey[700],
-                    textColor: Colors.white,
-                    fontSize: 19.0,
-                  );
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (context) => JobsGrid()));
+                ElevatedButton(
+                  onPressed: () {
+                    Fluttertoast.showToast(
+                      msg: "Successfully applied!",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.SNACKBAR,
+                      timeInSecForIosWeb: 2,
+                      backgroundColor: Colors.blueGrey[700],
+                      textColor: Colors.white,
+                      fontSize: 19.0,
+                    );
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context) => JobsGrid()));
 
-                  appliedJobSetup();
-                },
-                child: Text("Submit"),
-              ),
+                    appliedJobSetup();
+                  },
+                  child: Text("Submit"),
+                ),
 
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
   Future<void> setUp()async{
@@ -172,8 +171,8 @@ class _MyFormPageState extends State<MyFormPage> {
       'skills' : skillsCtrl.text,
       'reg_time' : DateTime.now(),
       'user_id' : docId!,
-       'designation' :designationCtrl.text,
-     // 'company_name' :
+      'designation' :designationCtrl.text,
+      // 'company_name' :
     };
 
     final  uploadData =  await FirebaseFirestore.instance.collection('Applied_Job').add(data);
@@ -188,4 +187,3 @@ class _MyFormPageState extends State<MyFormPage> {
 
   }
 }
-

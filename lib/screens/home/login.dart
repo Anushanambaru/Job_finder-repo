@@ -5,13 +5,10 @@ import 'package:job_finder/screens/home/forgotPassword.dart';
 import 'package:job_finder/screens/home/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:job_finder/screens/home/reusable.dart';
-import 'package:job_finder/screens/home/widgets/commonWidgets.dart';
-import 'package:job_finder/screens/home/widgets/recruiter_Login.dart';
 import 'package:job_finder/screens/home/widgets/google_sigin_button.dart';
 import 'package:job_finder/screens/home/widgets/user_recruiter.dart';
 
-import '../../helper_functions/helper_function.dart';
-import '../../service/auth_service.dart';
+import 'package:job_finder/service/auth_service.dart';
 
 class Loginpage extends StatelessWidget {
   const Loginpage({super.key});
@@ -46,7 +43,7 @@ class _AuthpageState extends State<Authpage> {
         final String email = emailController.text.trim();
         final String password = passwordController.text.trim();
         final UserCredential userCredential =
-            await _auth.signInWithEmailAndPassword(
+        await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
@@ -169,7 +166,7 @@ class _AuthpageState extends State<Authpage> {
             // when button is pressed
             onPressed: () {
               setState(
-                () {
+                    () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(

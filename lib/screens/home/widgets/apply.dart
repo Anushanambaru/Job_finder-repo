@@ -41,9 +41,9 @@ class _ApplyPageState extends State<ApplyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         title: Text(widget.name,style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),),
-    ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children:[
@@ -57,20 +57,20 @@ class _ApplyPageState extends State<ApplyPage> {
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       children: [
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Text(
-                      'Role : ${widget.role}',
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Text(
-                        'Vacancies : ${widget.vacancy}',
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Text(
+                            'Role : ${widget.role}',
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Text(
+                            'Vacancies : ${widget.vacancy}',
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Text(
@@ -85,7 +85,7 @@ class _ApplyPageState extends State<ApplyPage> {
                             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ),
-                    ],),
+                      ],),
                   ),
                 ],
               ),
@@ -132,7 +132,7 @@ class _ApplyPageState extends State<ApplyPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MyFormPage()
+                builder: (context) => MyFormPage()
             ),
           );
         },

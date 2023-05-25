@@ -63,7 +63,7 @@ class _EditPageState extends State<EditPage> {
                     labelText: 'Email',
                   ),
                   controller: emailCtrl,
-                  readOnly: true,
+                  readOnly: false,
                 ),
                 SizedBox(height: 16.0),
                 TextFormField(
@@ -131,10 +131,10 @@ class _EditPageState extends State<EditPage> {
                             MaterialPageRoute(
                                 builder: (context) => ProfilePage(
                                     profileImageUrl:
-                                        "https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-blue-working-woman-illustration-womanbusinessoffice-png-image_591421.jpg")),
-                            (route) => false);
+                                    "https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-blue-working-woman-illustration-womanbusinessoffice-png-image_591421.jpg")),
+                                (route) => false);
                       }).catchError((error) =>
-                              print('User data Update failed Due to : $error'));
+                          print('User data Update failed Due to : $error'));
                     }
                   },
                   child: Text('update'),

@@ -42,7 +42,7 @@ class _AuthpageState extends State<Authpage> {
         final String email = emailController.text.trim();
         final String password = passwordController.text.trim();
         final UserCredential userCredential =
-            await _auth.signInWithEmailAndPassword(
+        await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
@@ -158,7 +158,7 @@ class _AuthpageState extends State<Authpage> {
               // when button is pressed
               onPressed: () {
                 setState(
-                  () {
+                      () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -315,7 +315,7 @@ class _AuthpageState extends State<Authpage> {
                             },
                             style: TextButton.styleFrom(
                               backgroundColor:
-                                  const Color.fromARGB(255, 58, 107, 58),
+                              const Color.fromARGB(255, 58, 107, 58),
                             ),
                             child: const Text(
                               'Login',

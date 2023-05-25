@@ -257,8 +257,8 @@ class _CreateAccountState extends State<CreateAccount> {
                                   autovalidate = AutovalidateMode.disabled;
                                   FirebaseAuth.instance
                                       .createUserWithEmailAndPassword(
-                                          email: emailController.text,
-                                          password: passwordController.text)
+                                      email: emailController.text,
+                                      password: passwordController.text)
                                       .then((value) {
                                     Navigator.push(
                                       context,
