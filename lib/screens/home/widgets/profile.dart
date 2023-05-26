@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,20 +5,20 @@ import 'package:job_finder/screens/home/edit.dart';
 import 'package:job_finder/screens/home/home.dart';
 
 class ProfilePage extends StatefulWidget {
- // final String? name;
- //  final String? emails;
+  // final String? name;
+  //  final String? emails;
   final String profileImageUrl;
- //  final String qualification;
- //  final String phone;
- // final String role;
+  //  final String qualification;
+  //  final String phone;
+  // final String role;
 
-ProfilePage({
-  //  required this.name,
-  // required this.emails,
-  // required this.qualification,
-  // required this.phone,
-  required this.profileImageUrl,
-  // required this.role,
+  ProfilePage({
+    //  required this.name,
+    // required this.emails,
+    // required this.qualification,
+    // required this.phone,
+    required this.profileImageUrl,
+    // required this.role,
   });
 
   @override
@@ -33,12 +32,9 @@ class _ProfilePageState extends State<ProfilePage> {
   // final TextEditingController _controllerPhone=TextEditingController();
   // final TextEditingController _controllerEmail=TextEditingController();
 
+  // GlobalKey<FormState> key=GlobalKey();
 
-
-
- // GlobalKey<FormState> key=GlobalKey();
-
- //CollectionReference _reference= FirebaseFirestore.instance.collection('Profile');
+  //CollectionReference _reference= FirebaseFirestore.instance.collection('Profile');
 
   String? userEmail;
   String? name;
@@ -52,15 +48,12 @@ class _ProfilePageState extends State<ProfilePage> {
     // TODO: implement initState
     super.initState();
     firebaseSetup();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
-        child: Scaffold(
+      child: Scaffold(
           backgroundColor: Colors.cyan[50],
           appBar: AppBar(
             title: const Text('User Profile'),
@@ -73,141 +66,160 @@ class _ProfilePageState extends State<ProfilePage> {
                 //action coe when button is pressed
               },
               icon: const Icon(
-                Icons. arrow_back,
+                Icons.arrow_back,
                 size: 27,
               ),
             ),
           ),
-      body: SingleChildScrollView(
-        child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 15,),
-            CircleAvatar(
-              backgroundImage: NetworkImage(widget.profileImageUrl),
-              radius: 50,
-            ),
+          body: SingleChildScrollView(
+              child: Center(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                const SizedBox(
+                  height: 15,
+                ),
+                CircleAvatar(
+                  backgroundImage: NetworkImage(widget.profileImageUrl),
+                  radius: 50,
+                ),
 
-            // SizedBox(height: 16),
+                // SizedBox(height: 16),
 
-            // SizedBox(height: 2),
-            // Text(
-            //   widget.Phone,
-            //   style: TextStyle(fontSize: 16),
-            // ),
-      const SizedBox (height: 10),
-      Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-
-          children: <Widget> [
-            const Text(
-              'Name',
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 18.0, color: Colors.black54,
-              ),
-            ),
-              Text(
-                '$name',  style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
-            const SizedBox(height: 25.0),
-            const Text(
-              'Email',
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 18.0, color: Colors.black54,
-              ),
-            ),
-             Text('$userEmail', style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
-            const SizedBox(height: 25.0),
-            const Text(
-              'Phone',
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 18.0, color: Colors.black54,
-              ),
-            ),
-             Text('${phone??"NA"}', style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
-            const SizedBox(height: 25.0),
-
-            const Text(
-              'Designation',
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 18.0, color: Colors.black54,
-              ),
-            ),
-             Text('${designation??"NA"}', style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
-            const SizedBox(height: 25.0),
-            const Text(
-              'Experience',
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 18.0, color: Colors.black54,
-              ),
-            ),
-            Text('${experience??"NA"}', style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
-
-            const SizedBox(height: 25.0),
-
-            const Text(
-              'Skills',
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 18.0, color: Colors.black54,
-              ),
-            ),
-            Text('${skills??"NA"}', style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 20, color: Colors.black)),
-
-            const SizedBox(height: 50.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) =>  EditPage()));
-              },
-              child: const Text('Edit'),
-
-            ),
-          ],
-
-    )
-          ]
-          )
-    )
-    )
-        ),
+                // SizedBox(height: 2),
+                // Text(
+                //   widget.Phone,
+                //   style: TextStyle(fontSize: 16),
+                // ),
+                const SizedBox(height: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Text(
+                      'Name',
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18.0,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    Text('$name',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 20,
+                            color: Colors.black)),
+                    const SizedBox(height: 25.0),
+                    const Text(
+                      'Email',
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18.0,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    Text('$userEmail',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 20,
+                            color: Colors.black)),
+                    const SizedBox(height: 25.0),
+                    const Text(
+                      'Phone',
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18.0,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    Text('${phone ?? "NA"}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 20,
+                            color: Colors.black)),
+                    const SizedBox(height: 25.0),
+                    const Text(
+                      'Designation',
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18.0,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    Text('${designation ?? "NA"}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 20,
+                            color: Colors.black)),
+                    const SizedBox(height: 25.0),
+                    const Text(
+                      'Experience',
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18.0,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    Text('${experience ?? "NA"}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 20,
+                            color: Colors.black)),
+                    const SizedBox(height: 25.0),
+                    const Text(
+                      'Skills',
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18.0,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    Text('${skills ?? "NA"}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 20,
+                            color: Colors.black)),
+                    const SizedBox(height: 50.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditPage()));
+                      },
+                      child: const Text('Edit'),
+                    ),
+                  ],
+                )
+              ])))),
     );
   }
 
-  firebaseSetup()async{
-    var myemail = await  FirebaseAuth.instance.currentUser!.email;
-    var userQuery = await FirebaseFirestore.instance.collection('users').where('email',isEqualTo: myemail).get();
+  firebaseSetup() async {
+    var myemail = await FirebaseAuth.instance.currentUser!.email;
+    var userQuery = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: myemail)
+        .get();
+    print("Rehaman Shaik : ${myemail}  ${userQuery.docs[0]['email']}");
     var userData = userQuery.docs[0];
 
     bool isExistinguser = userData.data().length > 8;
 
     userEmail = userData['email'];
-    name = userData['fullName'];
+    name = userData['displayname'];
 
-    if(isExistinguser) {
+    if (isExistinguser) {
       String userPhone = userData['phone'] ?? '';
 
-        if (userPhone.isNotEmpty) {
-          phone = userData['phone'];
-          experience = userData['experience'];
-          designation = userData['designation'];
-          skills = userData['skills'];
-        }
-
+      if (userPhone.isNotEmpty) {
+        phone = userData['phone'];
+        experience = userData['experience'];
+        designation = userData['designation'];
+        skills = userData['skills'];
+      }
     }
 
-    setState(() {
-
-    });
-
+    setState(() {});
   }
-
 }
-
-

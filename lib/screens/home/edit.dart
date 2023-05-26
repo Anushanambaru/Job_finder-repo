@@ -156,7 +156,7 @@ class _EditPageState extends State<EditPage> {
     var userData = userQuery.docs[0];
 
     userEmail = userData['email'];
-    name = userData['fullName'];
+    name = userData['displayname'];
     docId = userData['uid'];
     print('User id : $docId');
     bool isExistinguser = userData.data().length > 8;

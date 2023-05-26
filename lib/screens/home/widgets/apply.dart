@@ -132,7 +132,7 @@ class _ApplyPageState extends State<ApplyPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MyFormPage()
+              builder: (context) => MyFormPage(company: widget.name,)
             ),
           );
         },
